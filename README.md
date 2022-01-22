@@ -2,7 +2,7 @@
 SKSE plugin that washes away blood when swimming and in rain
 
 * **[Download on Nexus Mods!](https://www.nexusmods.com/skyrimspecialedition/mods/62358)**
-* [SKSEVR version](https://www.nexusmods.com/skyrimspecialedition/mods/58296)
+* [SKSEVR version](https://www.nexusmods.com/skyrimspecialedition/mods/62372)
 
 
 ## Requirements
@@ -42,14 +42,14 @@ git submodule update
 ### SSE
 ```
 cmake --preset vs2022-windows-vcpkg # for vs2019 use vs2019-windows-vcpkg
-cmake --build buildsse --config Release
+cmake --build build --config Release
 ```
 ### VR
 ```
 cmake --preset vs2022-windows-vcpkg-vr # for vs2019 use vs2019-windows-vcpkg-vr
 cmake --build buildvr --config Release
 ```
-For VR, if you run into namespace errors/ambiguous references for stl or FORM. You may need to add :: in front of stl or FORM throughout. Cherry-pick `784293df6f8da93c2b8b114f578ec043a84cdd74` from https://github.com/alandtse/PapyrusExtenderSSE/tree/ambiguous_references to fix.
+For VR, if you run into namespace errors/ambiguous references for stl or FORM. You may need to add :: in front of stl. Cherry-pick `8aa0a6527f8ef2133f494786f963c94c62e64470` from https://github.com/alandtse/WashThatBloodOff/tree/ambiguous_references to fix.
 
 ## License
 [MIT](LICENSE)
