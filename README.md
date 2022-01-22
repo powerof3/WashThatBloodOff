@@ -1,6 +1,10 @@
 # Wash That Blood Off
 SKSE plugin that washes away blood when swimming and in rain
 
+* **[Download on Nexus Mods!](https://www.nexusmods.com/skyrimspecialedition/mods/62358)**
+* [SKSEVR version](https://www.nexusmods.com/skyrimspecialedition/mods/58296)
+
+
 ## Requirements
 * [CMake](https://cmake.org/)
 	* Add this to your `PATH`
@@ -12,7 +16,14 @@ SKSE plugin that washes away blood when swimming and in rain
 * [CommonLibSSE](https://github.com/powerof3/CommonLibSSE/tree/dev)
 	* You need to build from the powerof3/dev branch
 	* Add this as as an environment variable `CommonLibSSEPath`
+* [CommonLibVR](https://github.com/alandtse/CommonLibVR/tree/vr)
+	* Add this as as an environment variable `CommonLibVRPath`
 
+## User Requirements
+* [Address Library for SKSE](https://www.nexusmods.com/skyrimspecialedition/mods/32444)
+	* Needed for SSE
+* [VR Address Library for SKSEVR](https://www.nexusmods.com/skyrimspecialedition/mods/58101)
+	* Needed for VR
 ## Register Visual Studio as a Generator
 * Open `x64 Native Tools Command Prompt`
 * Run `cmake`
@@ -22,7 +33,23 @@ SKSE plugin that washes away blood when swimming and in rain
 ```
 git clone https://github.com/powerof3/WashThatBloodOff.git
 cd WashThatBloodOff
-cmake -B build -S .
+# pull commonlib, skip if you've defined it in the path
+git submodule init
+# to update submodules to latest build (warning may result in build problems)
+git submodule update
 ```
+
+### SSE
+```
+cmake --preset vs2022-windows-vcpkg # for vs2019 use vs2019-windows-vcpkg
+cmake --build buildsse --config Release
+```
+### VR
+```
+cmake --preset vs2022-windows-vcpkg-vr # for vs2019 use vs2019-windows-vcpkg-vr
+cmake --build buildvr --config Release
+```
+For VR, if you run into namespace errors/ambiguous references for stl or FORM. You may need to add :: in front of stl or FORM throughout. Cherry-pick `784293df6f8da93c2b8b114f578ec043a84cdd74` from https://github.com/alandtse/PapyrusExtenderSSE/tree/ambiguous_references to fix.
+
 ## License
 [MIT](LICENSE)
