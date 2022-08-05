@@ -33,7 +33,7 @@ namespace Rain
 					manager->SetRaining(isRaining);
 
 					if (manager->IsRaining()) {
-						util::clear_decals(RE::PlayerCharacter::GetSingleton(), true);
+						util::clear_decals(RE::PlayerCharacter::GetSingleton(), false);
 					    if (Settings::GetSingleton()->GetAllowRainingNPC()) {
 							util::clear_decals_all();
 						}
@@ -53,8 +53,8 @@ namespace Rain
 				if (a_isInterior) {
 					manager->SetRaining(false);
 				} else if (const auto sky = RE::Sky::GetSingleton(); sky) {
-					manager->SetRaining(sky->IsRaining());
-					if (manager->IsRaining()) {
+					util::clear_decals(RE::PlayerCharacter::GetSingleton(), false);
+					if (Settings::GetSingleton()->GetAllowRainingNPC()) {
 						util::clear_decals_all();
 					}
 				}

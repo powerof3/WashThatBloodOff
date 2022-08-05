@@ -4,7 +4,7 @@ namespace Swim
 {
 	struct detail
 	{
-		static void ClearBloodInWater(const RE::Character* a_actor, const RE::hkpCollidable* a_collidable);
+		static void clear_blood(const RE::Character* a_actor, const RE::hkpCollidable* a_collidable);
 	};
 
 	struct ProcessInWater
@@ -13,7 +13,7 @@ namespace Swim
 		{
 			static bool thunk(RE::PlayerCharacter* a_actor, RE::hkpCollidable* a_collidable, float a_waterHeight, float a_deltaTime)
 			{
-				detail::ClearBloodInWater(a_actor, a_collidable);
+				detail::clear_blood(a_actor, a_collidable);
 
 				return func(a_actor, a_collidable, a_waterHeight, a_deltaTime);
 			}
@@ -26,7 +26,7 @@ namespace Swim
 		{
 			static bool thunk(RE::Character* a_actor, RE::hkpCollidable* a_collidable, float a_waterHeight, float a_deltaTime)
 			{
-				detail::ClearBloodInWater(a_actor, a_collidable);
+				detail::clear_blood(a_actor, a_collidable);
 
 				return func(a_actor, a_collidable, a_waterHeight, a_deltaTime);
 			}

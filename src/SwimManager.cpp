@@ -3,7 +3,7 @@
 
 namespace Swim
 {
-	void detail::ClearBloodInWater(const RE::Character* a_actor, const RE::hkpCollidable* a_collidable)
+	void detail::clear_blood(const RE::Character* a_actor, const RE::hkpCollidable* a_collidable)
 	{
 		const auto colLayer = static_cast<RE::COL_LAYER>(a_collidable->broadPhaseHandle.collisionFilterInfo & 0x7F);
 
