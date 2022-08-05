@@ -1,4 +1,5 @@
 # Wash That Blood Off
+
 SKSE plugin that washes away blood when swimming and in rain
 
 ## Requirements
@@ -13,6 +14,10 @@ SKSE plugin that washes away blood when swimming and in rain
 	* You need to build from the powerof3/dev branch
 	* Add this as as an environment variable `CommonLibSSEPath`
 
+## User Requirements
+* [Address Library for SKSE](https://www.nexusmods.com/skyrimspecialedition/mods/32444)
+	* Needed for SSE/AE
+
 ## Register Visual Studio as a Generator
 * Open `x64 Native Tools Command Prompt`
 * Run `cmake`
@@ -22,7 +27,17 @@ SKSE plugin that washes away blood when swimming and in rain
 ```
 git clone https://github.com/powerof3/WashThatBloodOff.git
 cd WashThatBloodOff
-cmake -B build -S .
+```
+
+### SSE
+```
+cmake --preset vs2022-windows-vcpkg-se
+cmake --build build --config Release
+```
+### AE
+```
+cmake --preset vs2022-windows-vcpkg-ae
+cmake --build buildae --config Release
 ```
 ## License
 [MIT](LICENSE)
