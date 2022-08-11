@@ -1,12 +1,14 @@
 cmake_minimum_required(VERSION 3.20)
 set(NAME "po3_WashThatBloodOff")
-set(VERSION 1.0.0)
+set(VERSION 2.0.0)
 set(VR_VERSION 1)
+set(AE_VERSION 1)
 
 # ---- Options ----
 
 option(COPY_BUILD "Copy the build output to the Skyrim directory." TRUE)
 option(BUILD_SKYRIMVR "Build for Skyrim VR" OFF)
+option(BUILD_SKYRIMAE "Build for Skyrim AE" OFF)
 
 # ---- Cache build vars ----
 
@@ -21,7 +23,7 @@ macro(find_commonlib_path)
 		# Check extern
 		find_path(CommonLibPath
 		include/REL/Relocation.h
-		PATHS external/${CommonLibName})
+		PATHS extern/${CommonLibName})
 		if (${CommonLibPath} STREQUAL "CommonLibPath-NOTFOUND")
 			#Check path
 			set_from_environment(${CommonLibName}Path)
@@ -31,7 +33,14 @@ macro(find_commonlib_path)
 endmacro()
 
 set_from_environment(VCPKG_ROOT)
-if(BUILD_SKYRIMVR)
+if(BUILD_SKYRIMAE)
+	add_compile_definitions(SKYRIM_AE)
+	add_compile_definitions(SKYRIM_SUPPORT_AE)
+	set_from_environment(SkyrimAEPath)
+	set(SkyrimPath ${SkyrimAEPath})
+	set(SkyrimVersion "Skyrim AE")
+	set(VERSION ${VERSION}.${AE_VERSION})
+elseif(BUILD_SKYRIMVR)
 	add_compile_definitions(SKYRIMVR)
 	add_compile_definitions(_CRT_SECURE_NO_WARNINGS)
 	set(CommonLibName "CommonLibVR")
@@ -103,10 +112,6 @@ add_compile_definitions(
 )
 
 if (MSVC)
-	add_compile_definitions(
-		_UNICODE
-	)
-
 	if (NOT ${CMAKE_GENERATOR} STREQUAL "Ninja")
 		add_compile_options(
 			/MP	# Build with Multiple Processes
@@ -117,10 +122,7 @@ endif ()
 set(CMAKE_INTERPROCEDURAL_OPTIMIZATION ON)
 set(CMAKE_INTERPROCEDURAL_OPTIMIZATION_DEBUG OFF)
 
-set(Boost_USE_MULTITHREADED ON)
 set(Boost_USE_STATIC_LIBS ON)
-set(Boost_USE_DEBUG_RUNTIME ON)
-
 
 # ---- Dependencies ----
 if (DEFINED CommonLibPath AND NOT ${CommonLibPath} STREQUAL "" AND IS_DIRECTORY ${CommonLibPath})
@@ -128,13 +130,9 @@ if (DEFINED CommonLibPath AND NOT ${CommonLibPath} STREQUAL "" AND IS_DIRECTORY 
 else ()
 	message(
 		FATAL_ERROR
-		"Variable ${CommonLibName}Path is not set."
+		"Variable ${CommonLibName}Path is not set or in extern/."
 	)
-endif ()
-
-find_package(Boost MODULE REQUIRED)
-find_package(spdlog REQUIRED CONFIG)
-find_package(xbyak REQUIRED CONFIG)
+endif()
 
 find_path(SIMPLEINI_INCLUDE_DIRS "ConvertUTF.c")
 
@@ -168,13 +166,18 @@ add_library(
 	${CMAKE_CURRENT_BINARY_DIR}/include/Version.h
 	${CMAKE_CURRENT_BINARY_DIR}/version.rc
 	.clang-format
-	.editorconfig
 )
 
 target_compile_features(
 	${PROJECT_NAME}
 	PRIVATE
-		cxx_std_20
+		cxx_std_23
+)
+
+target_compile_definitions(
+	${PROJECT_NAME}
+	PRIVATE
+		_UNICODE
 )
 
 target_include_directories(
@@ -188,10 +191,13 @@ target_include_directories(
 target_link_libraries(
 	${PROJECT_NAME}
 	PRIVATE
-		Boost::headers
 		${CommonLibName}::${CommonLibName}
-		spdlog::spdlog
-		xbyak::xbyak
+)
+
+target_precompile_headers(
+	${PROJECT_NAME}
+	PRIVATE
+		src/PCH.h
 )
 
 if (MSVC)
@@ -230,7 +236,7 @@ if (MSVC)
 			/external:W0
 
 			/W4	# Warning level
-			/WX # Warning level (warnings are errors)
+			/WX	# Warning level (warnings are errors)
 
 			"$<$<CONFIG:DEBUG>:>"
 			"$<$<CONFIG:RELEASE>:/Zc:inline;/JMC-;/Ob3>"
@@ -244,17 +250,7 @@ if (MSVC)
 			"$<$<CONFIG:DEBUG>:/INCREMENTAL;/OPT:NOREF;/OPT:NOICF>"
 			"$<$<CONFIG:RELEASE>:/INCREMENTAL:NO;/OPT:REF;/OPT:ICF;/DEBUG:FULL>"
 	)
-
-	# fix a warning with /Ob2 being overridden with /Ob3
-	string(REPLACE "/Ob2" "/Ob3" CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE}")
-
 endif ()
-
-target_precompile_headers(
-	${PROJECT_NAME}
-	PRIVATE
-		src/PCH.h
-)
 
 # ---- Post build ----
 

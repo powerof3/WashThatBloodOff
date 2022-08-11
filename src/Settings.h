@@ -16,30 +16,11 @@ public:
 		return &singleton;
 	}
 
-	void LoadSettings()
-	{
-		constexpr auto path = L"Data/SKSE/Plugins/po3_WashThatBloodOff.ini";
-
-		CSimpleIniA ini;
-		ini.SetUnicode();
-
-		ini.LoadFile(path);
-
-		detail::get_value(ini, swimming.enable, "Swimming", "Enable", ";Wash blood off when swimming");
-		detail::get_value(ini, swimming.affectNPC, "Swimming", "Affect NPCs", ";Wash blood off when NPCs are swimming");
-
-		detail::get_value(ini, raining.enable, "Raining", "Enable", ";Wash blood off when raining");
-		detail::get_value(ini, raining.affectNPC, "Raining", "Affect NPCs", ";Wash NPC blood off when raining");
-		detail::get_value(ini, raining.preventBlood, "Raining", "No Blood Splatter", ";Characters will not get bloody when raining");
-
-		ini.SaveFile(path);
-	}
-
-	[[nodiscard]] bool GetAllowSwimming() const { return swimming.enable; }
-	[[nodiscard]] bool GetAllowSwimmingNPC() const { return swimming.affectNPC; }
-	[[nodiscard]] bool GetAllowRaining() const { return raining.enable; };
-	[[nodiscard]] bool GetAllowRainingNPC() const { return raining.affectNPC; }
-	[[nodiscard]] bool GetAllowRainingNoBlood() const { return raining.preventBlood; }
+    [[nodiscard]] bool GetAllowSwimming() const;
+    [[nodiscard]] bool GetAllowSwimmingNPC() const;
+    [[nodiscard]] bool GetAllowRaining() const;
+	[[nodiscard]] bool GetAllowRainingNPC() const;
+    [[nodiscard]] bool GetAllowRainingNoBlood() const;
 
 private:
 	struct detail
@@ -51,7 +32,7 @@ private:
 		}
 	};
 
-	Settings() = default;
+	Settings();
 	Settings(const Settings&) = delete;
 	Settings(Settings&&) = delete;
 

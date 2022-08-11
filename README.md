@@ -1,4 +1,5 @@
 # Wash That Blood Off
+
 SKSE plugin that washes away blood when swimming and in rain
 
 * **[Download on Nexus Mods!](https://www.nexusmods.com/skyrimspecialedition/mods/62358)**
@@ -21,7 +22,7 @@ SKSE plugin that washes away blood when swimming and in rain
 
 ## User Requirements
 * [Address Library for SKSE](https://www.nexusmods.com/skyrimspecialedition/mods/32444)
-	* Needed for SSE
+	* Needed for SSE/AE
 * [VR Address Library for SKSEVR](https://www.nexusmods.com/skyrimspecialedition/mods/58101)
 	* Needed for VR
 ## Register Visual Studio as a Generator
@@ -41,15 +42,19 @@ git submodule update
 
 ### SSE
 ```
-cmake --preset vs2022-windows-vcpkg # for vs2019 use vs2019-windows-vcpkg
+cmake --preset vs2022-windows-vcpkg-se
 cmake --build build --config Release
+```
+### AE
+```
+cmake --preset vs2022-windows-vcpkg-ae
+cmake --build buildae --config Release
 ```
 ### VR
 ```
 cmake --preset vs2022-windows-vcpkg-vr # for vs2019 use vs2019-windows-vcpkg-vr
 cmake --build buildvr --config Release
 ```
-For VR, if you run into namespace errors/ambiguous references for stl or FORM. You may need to add :: in front of stl. Cherry-pick `8aa0a6527f8ef2133f494786f963c94c62e64470` from https://github.com/alandtse/WashThatBloodOff/tree/ambiguous_references to fix.
 
 ## License
 [MIT](LICENSE)

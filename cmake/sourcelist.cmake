@@ -1,5 +1,7 @@
 set(sources ${sources}
-	src/Manager.cpp
 	src/PCH.cpp
+	src/RainManager.cpp
+	src/Settings.cpp
+	src/SwimManager.cpp
 	src/main.cpp
 )
