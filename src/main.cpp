@@ -20,7 +20,8 @@ extern "C" DLLEXPORT constinit auto SKSEPlugin_Version = []() {
 	v.PluginVersion(Version::MAJOR);
 	v.PluginName("Wash That Blood Off 2");
 	v.AuthorName("powerofthree");
-	v.UsesAddressLibrary(true);
+	v.UsesAddressLibrary();
+	v.UsesUpdatedStructs();
 	v.CompatibleVersions({ SKSE::RUNTIME_LATEST });
 
 	return v;
