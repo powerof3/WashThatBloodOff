@@ -20,7 +20,7 @@ namespace util
 				}
 			}
 			if (const auto& biped = a_actor->GetBiped(i); biped) {
-				for (auto j = stl::to_underlying(RE::BIPED_OBJECT::kHandToHandMelee); j < stl::to_underlying(RE::BIPED_OBJECT::kTotal); j++) {
+				for (auto j = std::to_underlying(RE::BIPED_OBJECT::kHandToHandMelee); j < std::to_underlying(RE::BIPED_OBJECT::kTotal); j++) {
 					if (auto& weapon = biped->objects[j].partClone; weapon) {
 						RE::BSTempEffectWeaponBlood::ClearEffectForWeapon(weapon.get());
 					}

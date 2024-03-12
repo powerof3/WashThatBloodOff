@@ -34,6 +34,8 @@ SKSE plugin that washes away blood when swimming and in rain
 ```
 git clone https://github.com/powerof3/WashThatBloodOff.git
 cd WashThatBloodOff
+# Update vcpkg package baseline, in order to get latest packages.
+vcpkg x-update-baseline --add-initial-baseline
 # pull commonlib, skip if you've defined it in the path
 git submodule init
 # to update submodules to latest build (warning may result in build problems)
