@@ -5,16 +5,17 @@
 #include "RE/Skyrim.h"
 #include "SKSE/SKSE.h"
 
-#include <SimpleIni.h>
+#include "ClibUtil/simpleINI.hpp"
+#include "ClibUtil/singleton.hpp"
 #include <spdlog/sinks/basic_file_sink.h>
 
 #define DLLEXPORT __declspec(dllexport)
 
 namespace logger = SKSE::log;
 
+using namespace clib_util;
+using namespace clib_util::singleton;
 using namespace std::literals;
-
-using ACTOR_FLAGS = RE::Actor::BOOL_FLAGS;
 
 namespace stl
 {
@@ -43,8 +44,8 @@ namespace stl
 	}
 }
 
-#include "Version.h"
 #include "Util.h"
+#include "Version.h"
 
 #ifdef SKYRIM_AE
 #	define OFFSET(se, ae) ae

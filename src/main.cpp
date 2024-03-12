@@ -5,6 +5,8 @@ void MessageHandler(SKSE::MessagingInterface::Message* a_message)
 {
 	if (a_message->type == SKSE::MessagingInterface::kPostLoad) {
 		const auto settings = Settings::GetSingleton();
+		settings->LoadSettings();
+
 		if (settings->GetAllowSwimming()) {
 			Swim::Install();
 		}
@@ -40,11 +42,11 @@ extern "C" DLLEXPORT bool SKSEAPI SKSEPlugin_Query(const SKSE::QueryInterface* a
 
 	const auto ver = a_skse->RuntimeVersion();
 	if (ver
-#ifndef SKYRIMVR
+#	ifndef SKYRIMVR
 		< SKSE::RUNTIME_1_5_39
-#else
+#	else
 		> SKSE::RUNTIME_VR_1_4_15_1
-#endif
+#	endif
 	) {
 		logger::critical(FMT_STRING("Unsupported runtime version {}"), ver.string());
 		return false;

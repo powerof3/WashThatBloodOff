@@ -1,6 +1,6 @@
 #pragma once
 
-class Settings
+class Settings : public ISingleton<Settings>
 {
 public:
 	struct WashData
@@ -10,11 +10,7 @@ public:
 		bool preventBlood{ true };
 	};
 
-	[[nodiscard]] static Settings* GetSingleton()
-	{
-		static Settings singleton;
-		return &singleton;
-	}
+	void LoadSettings();
 
     [[nodiscard]] bool GetAllowSwimming() const;
     [[nodiscard]] bool GetAllowSwimmingNPC() const;
@@ -23,24 +19,6 @@ public:
     [[nodiscard]] bool GetAllowRainingNoBlood() const;
 
 private:
-	struct detail
-	{
-		static void get_value(CSimpleIniA& a_ini, bool& a_value, const char* a_section, const char* a_key, const char* a_comment)
-		{
-			a_value = a_ini.GetBoolValue(a_section, a_key, a_value);
-			a_ini.SetBoolValue(a_section, a_key, a_value, a_comment);
-		}
-	};
-
-	Settings();
-	Settings(const Settings&) = delete;
-	Settings(Settings&&) = delete;
-
-	~Settings() = default;
-
-	Settings& operator=(const Settings&) = delete;
-	Settings& operator=(Settings&&) = delete;
-
 	WashData swimming;
 	WashData raining;
 };

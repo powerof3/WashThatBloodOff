@@ -44,7 +44,7 @@ namespace util
 
     inline void clear_decals_all()
 	{
-        if (const auto processLists = RE::ProcessLists::GetSingleton(); processLists) {
+        if (const auto processLists = RE::ProcessLists::GetSingleton()) {
 			for (auto& actorHandle : processLists->highActorHandles) {
 				if (const auto actor = actorHandle.get(); actor && can_show_blood(actor.get())) {
 					clear_decals(actor.get());

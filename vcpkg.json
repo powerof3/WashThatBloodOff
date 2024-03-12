@@ -1,15 +1,13 @@
 {
   "name": "washthatbloodoff",
-  "version-string": "2.0.0",
+  "version-string": "2.1.0",
   "description": "",
   "homepage": "",
   "license": "MIT",
   "dependencies": [
-    "boost-stl-interfaces",
+    "clib-util",
     "rsm-binary-io",
-    "simpleini",
     "spdlog",
     "xbyak"
-  ],
-  "builtin-baseline": "ab887c562326c686478284d9076d722c1ec4b48c"
+  ]
 }

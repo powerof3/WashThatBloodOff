@@ -1,6 +1,6 @@
 #include "Settings.h"
 
-Settings::Settings()
+void Settings::LoadSettings()
 {
 	const auto path = fmt::format("Data/SKSE/Plugins/{}.ini", Version::PROJECT);
 
@@ -9,12 +9,12 @@ Settings::Settings()
 
 	ini.LoadFile(path.c_str());
 
-	detail::get_value(ini, swimming.enable, "Swimming", "Enable", ";Wash blood off when swimming");
-	detail::get_value(ini, swimming.affectNPC, "Swimming", "Affect NPCs", ";Wash blood off when NPCs are swimming");
+	ini::get_value(ini, swimming.enable, "Swimming", "Enable", ";Wash blood off when swimming");
+	ini::get_value(ini, swimming.affectNPC, "Swimming", "Affect NPCs", ";Wash blood off when NPCs are swimming");
 
-	detail::get_value(ini, raining.enable, "Raining", "Enable", ";Wash blood off when raining");
-	detail::get_value(ini, raining.affectNPC, "Raining", "Affect NPCs", ";Wash NPC blood off when raining");
-	detail::get_value(ini, raining.preventBlood, "Raining", "No Blood Splatter", ";Characters will not get bloody when raining");
+	ini::get_value(ini, raining.enable, "Raining", "Enable", ";Wash blood off when raining");
+	ini::get_value(ini, raining.affectNPC, "Raining", "Affect NPCs", ";Wash NPC blood off when raining");
+	ini::get_value(ini, raining.preventBlood, "Raining", "No Blood Splatter", ";Characters will not get bloody when raining");
 
 	(void)ini.SaveFile(path.c_str());
 }

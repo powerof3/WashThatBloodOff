@@ -5,15 +5,9 @@
 
 namespace Rain
 {
-	class Manager
+	class Manager : public ISingleton<Manager>
 	{
 	public:
-		[[nodiscard]] static Manager* GetSingleton()
-		{
-			static Manager singleton;
-			return &singleton;
-		}
-
 		static void Install();
 
 		bool IsRaining() const { return _raining; }
@@ -52,7 +46,7 @@ namespace Rain
 				const auto manager = GetSingleton();
 				if (a_isInterior) {
 					manager->SetRaining(false);
-				} else if (const auto sky = RE::Sky::GetSingleton(); sky) {
+				} else if (const auto sky = RE::Sky::GetSingleton(); sky && sky->IsRaining()) {
 					util::clear_decals(RE::PlayerCharacter::GetSingleton(), false);
 					if (Settings::GetSingleton()->GetAllowRainingNPC()) {
 						util::clear_decals_all();
@@ -63,15 +57,6 @@ namespace Rain
 		};
 
 	private:
-		Manager() = default;
-		Manager(const Manager&) = delete;
-		Manager(Manager&&) = delete;
-
-		~Manager() = default;
-
-		Manager& operator=(const Manager&) = delete;
-		Manager& operator=(Manager&&) = delete;
-
 		std::atomic_bool _raining{ false };
 	};
 
