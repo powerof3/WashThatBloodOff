@@ -19,13 +19,11 @@ namespace Rain
 
 		REL::Relocation<std::uintptr_t> leave_interior{ RELOCATION_ID(13172, 13317), OFFSET(0x2A, 0x1E) };
 		stl::write_thunk_call<SetInterior>(leave_interior.address());
-
-		logger::info("Installed rain manager");
 	}
 
 	void Decal::Actor::Install()
 	{
-		REL::Relocation<std::uintptr_t> target{ RELOCATION_ID(36682, 37690) };  //Actor::CreateBlood
+		REL::Relocation<std::uintptr_t> target{ RELOCATION_ID(36682, 37690) };  // Actor::CreateBlood
 		stl::write_thunk_call<GetScreenSplatterCount>(target.address() + OFFSET(0x13A, 0x127));
 
 	    stl::write_thunk_call<AddDecal>(target.address() + OFFSET(0x925, 0x9B5));  // Player
@@ -33,8 +31,6 @@ namespace Rain
 		if (Settings::GetSingleton()->GetAllowRainingNPC()) {
 			stl::write_thunk_call<AddDecal>(target.address() + OFFSET(0x10D5,0x1194));  // NPC
 		}
-
-		logger::info("Installed no rain blood splatter");
 	}
 
 	void Decal::Weapon::Install()
@@ -51,5 +47,7 @@ namespace Rain
 			Decal::Actor::Install();
 			Decal::Weapon::Install();
 		}
+
+		logger::info("Installed rain manager");
 	}
 }

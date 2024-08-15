@@ -19,5 +19,7 @@ namespace Swim
 		if (Settings::GetSingleton()->GetAllowSwimmingNPC()) {
 			stl::write_vfunc<RE::Character, ProcessInWater::NPC>();
 		}
+
+		logger::info("Installed swim manager");
 	}
 }

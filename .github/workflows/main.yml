@@ -19,9 +19,9 @@ jobs:
       FOMOD_MOD_AUTHOR: "powerofthree"
       FOMOD_MOD_NEXUS_ID: "62358"
       FOMOD_SE_MIN_GAME_VERSION: '1.5'
-      FOMOD_AE_NAME: 'SSE v1.6+ ("Anniversary Edition")'
+      FOMOD_AE_NAME: 'SSE v1.6.640+ ("Anniversary Edition")'
       FOMOD_AE_DESCR: 'Select this if you are using Skyrim Anniversary Edition v1.6.640 or higher.'
       FOMOD_AE_MIN_GAME_VERSION: '1.6'
       FOMOD_REQUIRED_INSTALLATION_DIR: "Skyrim/Data"
       PUBLISH_ARCHIVE_TYPE: '7z'
-      VCPKG_COMMIT_ID: '1f124eb6b188994a2e0fb7894690c69e600633ae'
+      VCPKG_COMMIT_ID: '9a6da16845eca8d6ed70be416c1acbd206894c7f'
